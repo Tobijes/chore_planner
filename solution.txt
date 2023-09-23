@@ -1,0 +1,105 @@
+LØSNING:
+Uge 1
+(1): Skrald (10), Badeværelse (15)
+(2): Støvsugning (20), Rense mikroovn (5)
+
+Uge 2
+(1): Støvsugning (20)
+(2): Skrald (10), Komfurrens (10)
+
+Uge 3
+(1): Skrald (10), Badeværelse (15), Skifte sengetøj (5)
+(2): Støvsugning (20), Køkkenvask (10)
+
+Uge 4
+(1): Støvsugning (20), Pudse vinduer (20)
+(2): Skrald (10), Komfurrens (10), Tørre støv af (20)
+
+Uge 5
+(1): Skrald (10), Afkalke (15), Ovnrens (30)
+(2): Støvsugning (20), Badeværelse (15), Rense mikroovn (5), Rense afløb (15)
+
+Uge 6
+(1): Støvsugning (20)
+(2): Skrald (10), Komfurrens (10)
+
+Uge 7
+(1): Skrald (10), Badeværelse (15), Skifte sengetøj (5)
+(2): Støvsugning (20), Køkkenvask (10)
+
+Uge 8
+(1): Støvsugning (20), Komfurrens (10)
+(2): Skrald (10), Tørre støv af (20)
+
+Uge 9
+(1): Skrald (10), Badeværelse (15)
+(2): Støvsugning (20), Rense mikroovn (5)
+
+Uge 10
+(1): Støvsugning (20)
+(2): Skrald (10), Komfurrens (10)
+
+Uge 11
+(1): Skrald (10), Badeværelse (15), Skifte sengetøj (5)
+(2): Støvsugning (20), Køkkenvask (10)
+
+Uge 12
+(1): Støvsugning (20), Komfurrens (10)
+(2): Skrald (10), Tørre støv af (20)
+
+Uge 13
+(1): Skrald (10), Badeværelse (15)
+(2): Støvsugning (20), Rense mikroovn (5)
+
+Uge 14
+(1): Støvsugning (20)
+(2): Skrald (10), Komfurrens (10)
+
+Uge 15
+(1): Skrald (10), Badeværelse (15), Skifte sengetøj (5)
+(2): Støvsugning (20), Køkkenvask (10)
+
+Uge 16
+(1): Støvsugning (20), Pudse vinduer (20)
+(2): Skrald (10), Komfurrens (10), Tørre støv af (20)
+
+Uge 17
+(1): Skrald (10), Badeværelse (15), Ovnrens (30)
+(2): Støvsugning (20), Rense mikroovn (5), Afkalke (15), Rense afløb (15)
+
+Uge 18
+(1): Støvsugning (20)
+(2): Skrald (10), Komfurrens (10)
+
+Uge 19
+(1): Skrald (10), Badeværelse (15), Skifte sengetøj (5)
+(2): Støvsugning (20), Køkkenvask (10)
+
+Uge 20
+(1): Støvsugning (20), Komfurrens (10)
+(2): Skrald (10), Tørre støv af (20)
+
+Uge 21
+(1): Skrald (10), Badeværelse (15)
+(2): Støvsugning (20), Rense mikroovn (5)
+
+Uge 22
+(1): Støvsugning (20)
+(2): Skrald (10), Komfurrens (10)
+
+Uge 23
+(1): Skrald (10), Badeværelse (15), Skifte sengetøj (5)
+(2): Støvsugning (20), Køkkenvask (10)
+
+Uge 24
+(1): Støvsugning (20), Komfurrens (10)
+(2): Skrald (10), Tørre støv af (20)
+
+Uge 25
+(1): Skrald (10), Badeværelse (15)
+(2): Støvsugning (20), Rense mikroovn (5)
+
+Uge 26
+(1): Støvsugning (20)
+(2): Skrald (10), Komfurrens (10)
+
