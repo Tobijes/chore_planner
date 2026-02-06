@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package choreplanner;
+
+// Sent from C# backend to Julia worker
+message JobRequest {
+  repeated TaskDef tasks = 1;
+  repeated string users = 2;
+  int32 n_periods = 3;
+}
+
+message TaskDef {
+  string label = 1;
+  int32 frequency = 2;        // 1, 2, 4, or 12
+  int32 workload = 3;         // minutes
+  bool force_alternation = 4; // only applies when frequency == 1
+}
+
+// Sent from Julia worker back to C# backend
+message JobResult {
+  repeated PeriodSchedule periods = 1;
+}
+
+message PeriodSchedule {
+  int32 period_number = 1;
+  repeated UserAssignment users = 2;
+}
+
+message UserAssignment {
+  string user_name = 1;
+  repeated TaskAssignment tasks = 2;
+}
+
+message TaskAssignment {
+  string label = 1;
+  int32 workload = 2;
+}
