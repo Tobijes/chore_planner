@@ -12,7 +12,7 @@ export async function submitJob(body: {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
-  if (!res.ok) throw new Error(`Submit failed: ${res.status}`);
+  if (!res.ok) throw new Error(`Indsendelse fejlede: ${res.status}`);
   return res.json();
 }
 
@@ -27,7 +27,7 @@ export function subscribeToJobEvents(
 
 export async function fetchResult(jobId: string): Promise<JobResult> {
   const res = await fetch(`${BASE}/${jobId}/result`);
-  if (!res.ok) throw new Error(`Fetch result failed: ${res.status}`);
+  if (!res.ok) throw new Error(`Hentning af resultat fejlede: ${res.status}`);
   const data = await res.json();
   return data.periods;
 }

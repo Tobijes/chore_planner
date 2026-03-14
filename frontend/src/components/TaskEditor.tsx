@@ -20,10 +20,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 
 const FREQUENCY_OPTIONS: { value: Task["frequency"]; label: string }[] = [
-  { value: 1, label: "Weekly" },
-  { value: 2, label: "Biweekly" },
-  { value: 4, label: "Monthly" },
-  { value: 12, label: "Quarterly" },
+  { value: 1, label: "Ugentlig" },
+  { value: 2, label: "Hver 2. uge" },
+  { value: 4, label: "Månedlig" },
+  { value: 12, label: "Kvartalsvis" },
 ];
 
 interface Props {
@@ -58,16 +58,16 @@ export function TaskEditor({ tasks, onChange }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Tasks</CardTitle>
+        <CardTitle className="text-lg">Opgaver</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Frequency (weeks)</TableHead>
-              <TableHead>Workload (min)</TableHead>
-              <TableHead>Alternate</TableHead>
+              <TableHead>Navn</TableHead>
+              <TableHead>Frekvens (uger)</TableHead>
+              <TableHead>Arbejdsbyrde (min)</TableHead>
+              <TableHead>Alternér</TableHead>
               <TableHead className="w-10"></TableHead>
             </TableRow>
           </TableHeader>
@@ -130,7 +130,7 @@ export function TaskEditor({ tasks, onChange }: Props) {
                     size="icon"
                     className="text-destructive"
                     onClick={() => removeTask(i)}
-                    title="Remove task"
+                    title="Fjern opgave"
                   >
                     x
                   </Button>
@@ -140,7 +140,7 @@ export function TaskEditor({ tasks, onChange }: Props) {
           </TableBody>
         </Table>
         <Button variant="outline" onClick={addTask} className="mt-2">
-          + Add Task
+          + Tilføj opgave
         </Button>
       </CardContent>
     </Card>

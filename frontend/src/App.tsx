@@ -16,13 +16,13 @@ function App() {
   const { status, result, error, submit } = useJobSubmission();
 
   if (!loaded)
-    return <div className="p-8 text-center text-muted-foreground">Loading...</div>;
+    return <div className="p-8 text-center text-muted-foreground">Indlæser...</div>;
 
   const isSubmitting = status === "Queued" || status === "Processing";
 
   return (
     <div className="mx-auto max-w-4xl p-8">
-      <h1 className="text-3xl font-bold mb-6">Pligtplan</h1>
+      <h1 className="text-3xl font-bold mb-6">Opgaveplan</h1>
 
       <div className="space-y-4">
         <TaskEditor tasks={tasks} onChange={setTasks} />
@@ -37,10 +37,10 @@ function App() {
             disabled={isSubmitting || tasks.length === 0}
             onClick={() => submit(tasks, [...users], nPeriods)}
           >
-            {isSubmitting ? `${status}...` : "Solve"}
+            {isSubmitting ? `${status}...` : "Beregn"}
           </Button>
           <Button variant="outline" onClick={resetToDefaults}>
-            Reset Tasks
+            Nulstil opgaver
           </Button>
         </div>
 

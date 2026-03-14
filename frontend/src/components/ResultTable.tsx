@@ -1,5 +1,5 @@
 import type { JobResult } from "../types";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -8,6 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Printer } from "lucide-react";
+import { generateSchedulePdf } from "@/utils/generateSchedulePdf";
 
 interface Props {
   result: JobResult;
@@ -18,13 +21,23 @@ export function ResultTable({ result, users }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Schedule</CardTitle>
+        <CardTitle className="text-lg">Skema</CardTitle>
+        <CardAction>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => generateSchedulePdf(result, users)}
+          >
+            <Printer data-icon="inline-start" />
+            Udskriv
+          </Button>
+        </CardAction>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-16 text-center">Week</TableHead>
+              <TableHead className="w-16 text-center">Uge</TableHead>
               {users.map((u) => (
                 <TableHead key={u}>{u}</TableHead>
               ))}

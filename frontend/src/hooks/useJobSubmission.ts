@@ -32,19 +32,19 @@ export function useJobSubmission() {
         }
         if (newStatus === "Failed") {
           es.close();
-          setError("Job failed");
+          setError("Job fejlede");
         }
       });
 
       es.onerror = () => {
         es.close();
-        setError("Connection lost");
+        setError("Forbindelse mistet");
         setStatus("Failed");
       };
 
       eventSourceRef.current = es;
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Unknown error");
+      setError(e instanceof Error ? e.message : "Ukendt fejl");
       setStatus("Failed");
     }
   };

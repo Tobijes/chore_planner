@@ -11,11 +11,11 @@ export function PeriodsInput({ value, onChange }: Props) {
   return (
     <Card className="flex-1">
       <CardHeader>
-        <CardTitle className="text-lg">Periods</CardTitle>
+        <CardTitle className="text-lg">Perioder</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center gap-2">
-          <Label htmlFor="periods">Number of weeks:</Label>
+          <Label htmlFor="periods">Antal uger:</Label>
           <Input
             id="periods"
             type="number"

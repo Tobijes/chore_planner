@@ -11,12 +11,12 @@ export function UserEditor({ users, setUser }: Props) {
   return (
     <Card className="flex-1">
       <CardHeader>
-        <CardTitle className="text-lg">Users</CardTitle>
+        <CardTitle className="text-lg">Brugere</CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
         {([0, 1] as const).map((i) => (
           <div key={i} className="flex items-center gap-2">
-            <Label htmlFor={`user-${i}`}>User {i + 1}:</Label>
+            <Label htmlFor={`user-${i}`}>Bruger {i + 1}:</Label>
             <Input
               id={`user-${i}`}
               type="text"
