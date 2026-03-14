@@ -30,8 +30,9 @@ Protobuf C# code is auto-generated at build time via Grpc.Tools (configured in t
 
 ### Worker (`worker/`)
 ```bash
-julia --project=worker worker/src/server.jl          # start ZMQ server on :5555
-julia --project=worker -e "using Pkg; Pkg.precompile()"  # precompile deps
+julia worker/scripts/generate_proto.jl                    # regenerate protobuf bindings (after .proto changes)
+julia --project=worker worker/src/server.jl               # start ZMQ server on :5555
+julia --project=worker -e "using Pkg; Pkg.precompile()"   # precompile deps
 ```
 
 ### Running the full stack
@@ -47,7 +48,7 @@ Start all three processes (worker, backend, frontend) in separate terminals. The
 5. Backend stores the result, notifies SSE listeners, frontend fetches result via `GET /api/jobs/{id}/result`
 
 ### Protobuf Schema (`protobuf/choreplanner.proto`)
-Shared contract between backend and worker. The backend has a copy at `backend/ChorePlanner.Api/Proto/choreplanner.proto`. Julia generates its bindings at worker startup from the root proto file.
+Shared contract between backend and worker. The backend has a copy at `backend/ChorePlanner.Api/Proto/choreplanner.proto`. Julia bindings are generated offline via `worker/scripts/generate_proto.jl` and committed to git. Re-run the script after modifying the proto file.
 
 ### Key Backend Files
 - `Controllers/JobsController.cs` — REST endpoints (submit, SSE events, result, delete)

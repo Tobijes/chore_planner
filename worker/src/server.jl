@@ -1,16 +1,9 @@
 using ProtoBuf
 using ZMQ
 
-# ── Generate Julia types from .proto ─────────────────────────────────────────
+# ── Pre-generated protobuf types (regenerate via: julia worker/scripts/generate_proto.jl)
 
-const PROTO_INPUT_DIR  = joinpath(@__DIR__, "..", "..", "protobuf")
-const PROTO_OUTPUT_DIR = joinpath(@__DIR__, "proto")
-
-# Generate Julia code from the .proto file (idempotent – overwrites each time)
-ProtoBuf.protojl("choreplanner.proto", PROTO_INPUT_DIR, PROTO_OUTPUT_DIR)
-
-# Include the generated module
-include(joinpath(PROTO_OUTPUT_DIR, "choreplanner", "choreplanner.jl"))
+include(joinpath(@__DIR__, "proto", "choreplanner", "choreplanner.jl"))
 
 using .choreplanner
 
