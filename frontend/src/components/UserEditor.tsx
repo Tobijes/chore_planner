@@ -1,3 +1,7 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+
 interface Props {
   users: [string, string];
   setUser: (index: 0 | 1, name: string) => void;
@@ -5,26 +9,24 @@ interface Props {
 
 export function UserEditor({ users, setUser }: Props) {
   return (
-    <div className="user-editor">
-      <h2>Users</h2>
-      <div className="user-inputs">
-        <label>
-          User 1:
-          <input
-            type="text"
-            value={users[0]}
-            onChange={(e) => setUser(0, e.target.value)}
-          />
-        </label>
-        <label>
-          User 2:
-          <input
-            type="text"
-            value={users[1]}
-            onChange={(e) => setUser(1, e.target.value)}
-          />
-        </label>
-      </div>
-    </div>
+    <Card className="flex-1">
+      <CardHeader>
+        <CardTitle className="text-lg">Users</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        {([0, 1] as const).map((i) => (
+          <div key={i} className="flex items-center gap-2">
+            <Label htmlFor={`user-${i}`}>User {i + 1}:</Label>
+            <Input
+              id={`user-${i}`}
+              type="text"
+              value={users[i]}
+              onChange={(e) => setUser(i, e.target.value)}
+              className="w-40"
+            />
+          </div>
+        ))}
+      </CardContent>
+    </Card>
   );
 }

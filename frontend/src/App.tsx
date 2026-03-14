@@ -6,7 +6,8 @@ import { TaskEditor } from "./components/TaskEditor";
 import { UserEditor } from "./components/UserEditor";
 import { PeriodsInput } from "./components/PeriodsInput";
 import { ResultTable } from "./components/ResultTable";
-import "./App.css";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 function App() {
   const { tasks, setTasks, resetToDefaults, loaded } = useTasks();
@@ -14,39 +15,47 @@ function App() {
   const [nPeriods, setNPeriods] = useState(26);
   const { status, result, error, submit } = useJobSubmission();
 
-  if (!loaded) return <div className="loading">Loading...</div>;
+  if (!loaded)
+    return <div className="p-8 text-center text-muted-foreground">Loading...</div>;
 
   const isSubmitting = status === "Queued" || status === "Processing";
 
   return (
-    <div className="app">
-      <h1>Pligtplan</h1>
+    <div className="mx-auto max-w-4xl p-8">
+      <h1 className="text-3xl font-bold mb-6">Pligtplan</h1>
 
-      <div className="config-section">
+      <div className="space-y-4">
         <TaskEditor tasks={tasks} onChange={setTasks} />
 
-        <div className="config-row">
+        <div className="flex gap-4">
           <UserEditor users={users} setUser={setUser} />
           <PeriodsInput value={nPeriods} onChange={setNPeriods} />
         </div>
 
-        <div className="actions">
-          <button
-            className="btn-submit"
+        <div className="flex gap-2">
+          <Button
             disabled={isSubmitting || tasks.length === 0}
             onClick={() => submit(tasks, [...users], nPeriods)}
           >
             {isSubmitting ? `${status}...` : "Solve"}
-          </button>
-          <button className="btn-reset" onClick={resetToDefaults}>
+          </Button>
+          <Button variant="outline" onClick={resetToDefaults}>
             Reset Tasks
-          </button>
+          </Button>
         </div>
 
-        {error && <div className="error">{error}</div>}
+        {error && (
+          <Alert variant="destructive">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
       </div>
 
-      {result && <ResultTable result={result} users={users} />}
+      {result && (
+        <div className="mt-6">
+          <ResultTable result={result} users={users} />
+        </div>
+      )}
     </div>
   );
 }
