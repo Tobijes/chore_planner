@@ -13,7 +13,8 @@ public class ZmqWorkerClient : IDisposable
     public ZmqWorkerClient()
     {
         _socket = new RequestSocket();
-        _socket.Connect("tcp://localhost:5555");
+        var workerAddress = Environment.GetEnvironmentVariable("WORKER_ADDRESS") ?? "tcp://localhost:5555";
+        _socket.Connect(workerAddress);
     }
 
     public Task<JobResultDto> SendJobAsync(SubmitJobRequest request)

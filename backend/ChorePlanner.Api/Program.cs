@@ -8,17 +8,19 @@ builder.Services.AddSingleton<ZmqWorkerClient>();
 builder.Services.AddSingleton<JobQueueService>();
 builder.Services.AddHostedService(provider => provider.GetRequiredService<JobQueueService>());
 
+var corsOrigin = Environment.GetEnvironmentVariable("CORS_ORIGIN") ?? "http://localhost:5173";
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins(corsOrigin)
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
 });
 
-builder.WebHost.UseUrls("http://localhost:5000");
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 var app = builder.Build();
 

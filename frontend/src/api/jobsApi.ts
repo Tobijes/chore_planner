@@ -1,6 +1,6 @@
 import type { Task, JobStatus, JobResult } from "../types";
 
-const BASE = "http://localhost:5000/api/jobs";
+const BASE = "/api/jobs";
 
 export async function submitJob(body: {
   tasks: Task[];

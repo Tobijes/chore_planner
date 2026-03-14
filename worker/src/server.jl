@@ -48,45 +48,60 @@ end
 
 # ── ZeroMQ REP server ───────────────────────────────────────────────────────
 
-function run_server(; endpoint::String = "tcp://*:5555")
+PORT = get(ENV, "PORT", "5555")
+
+function run_server(; endpoint::String = "tcp://*:" * PORT)
     ctx = ZMQ.Context()
     sock = ZMQ.Socket(ctx, ZMQ.REP)
     ZMQ.bind(sock, endpoint)
 
     println("Worker listening on $endpoint")
 
-    while true
-        # Receive raw bytes
-        raw = ZMQ.recv(sock)
-        bytes = Vector{UInt8}(raw)
+    try
+        while true
+            # Receive raw bytes
+            raw = ZMQ.recv(sock)
+            bytes = Vector{UInt8}(raw)
 
-        println("Received job request ($(length(bytes)) bytes)")
+            println("Received job request ($(length(bytes)) bytes)")
 
-        # Decode protobuf request
-        iob = IOBuffer(bytes)
-        decoder = ProtoBuf.ProtoDecoder(iob)
-        req = ProtoBuf.decode(decoder, choreplanner.JobRequest)
+            # Decode protobuf request
+            iob = IOBuffer(bytes)
+            decoder = ProtoBuf.ProtoDecoder(iob)
+            req = ProtoBuf.decode(decoder, choreplanner.JobRequest)
 
-        println("  Tasks: $(length(req.tasks)), Users: $(length(req.users)), Periods: $(req.n_periods)")
+            println("  Tasks: $(length(req.tasks)), Users: $(length(req.users)), Periods: $(req.n_periods)")
 
-        # Convert, solve, convert back
-        tasks, users, n_periods = request_to_solver_inputs(req)
-        results = solve_chore_schedule(tasks, users, n_periods)
-        response = solver_result_to_response(results)
+            # Convert, solve, convert back
+            tasks, users, n_periods = request_to_solver_inputs(req)
+            results = solve_chore_schedule(tasks, users, n_periods)
+            response = solver_result_to_response(results)
 
-        # Encode protobuf response
-        out = IOBuffer()
-        encoder = ProtoBuf.ProtoEncoder(out)
-        ProtoBuf.encode(encoder, response)
-        resp_bytes = take!(out)
+            # Encode protobuf response
+            out = IOBuffer()
+            encoder = ProtoBuf.ProtoEncoder(out)
+            ProtoBuf.encode(encoder, response)
+            resp_bytes = take!(out)
 
-        println("  Sending result ($(length(resp_bytes)) bytes)")
+            println("  Sending result ($(length(resp_bytes)) bytes)")
 
-        # Send reply
-        ZMQ.send(sock, ZMQ.Message(resp_bytes))
+            # Send reply
+            ZMQ.send(sock, ZMQ.Message(resp_bytes))
+        end
+    catch e
+        if e isa InterruptException
+            println("\nShutting down worker...")
+        else
+            rethrow(e)
+        end
+    finally
+        close(sock)
+        close(ctx)
     end
 end
 
 # ── Main entry point ─────────────────────────────────────────────────────────
 
+# Convert SIGINT into an InterruptException instead of crashing at the C level
+Base.exit_on_sigint(false)
 run_server()
