@@ -1,8 +1,8 @@
-using ChorePlanner.Api.Models;
-using ChorePlanner.Api.Services;
+using TaskPlan.Api.Models;
+using TaskPlan.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ChorePlanner.Api.Controllers;
+namespace TaskPlan.Api.Controllers;
 
 [ApiController]
 [Route("api/jobs")]

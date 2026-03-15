@@ -28,16 +28,16 @@ end
 # ── Solver ───────────────────────────────────────────────────────────────────
 
 """
-    solve_chore_schedule(tasks, users, n_periods) -> Vector{PeriodResult}
+    solve_task_schedule(tasks, users, n_periods) -> Vector{PeriodResult}
 
-Solve the chore-planning MIP for exactly 2 users.
+Solve the task-planning MIP for exactly 2 users.
 
 * `tasks`     – `Vector{TaskInput}` with label, frequency, workload,
                 force_alternation
 * `users`     – `Vector{String}` of length 2 (user names)
 * `n_periods` – number of planning periods (weeks)
 """
-function solve_chore_schedule(
+function solve_task_schedule(
     tasks::Vector{TaskInput},
     users::Vector{String},
     n_periods::Int,

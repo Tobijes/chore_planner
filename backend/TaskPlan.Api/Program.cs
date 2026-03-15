@@ -1,4 +1,4 @@
-using ChorePlanner.Api.Services;
+using TaskPlan.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

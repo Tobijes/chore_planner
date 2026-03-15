@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import type { Task } from "../types";
 
-const STORAGE_KEY = "choreplanner-tasks";
+const STORAGE_KEY = "taskplan-tasks";
 
 export function useTasks() {
   const [tasks, setTasks] = useState<Task[]>([]);

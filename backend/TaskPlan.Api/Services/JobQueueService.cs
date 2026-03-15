@@ -1,8 +1,8 @@
 using System.Collections.Concurrent;
 using System.Threading.Channels;
-using ChorePlanner.Api.Models;
+using TaskPlan.Api.Models;
 
-namespace ChorePlanner.Api.Services;
+namespace TaskPlan.Api.Services;
 
 public class JobQueueService : BackgroundService
 {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace ChorePlanner.Api.Controllers;
+namespace TaskPlan.Api.Controllers;
 
 [ApiController]
 [Route("api/health")]

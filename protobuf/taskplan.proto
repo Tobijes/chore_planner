@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package choreplanner;
+package taskplan;
 
 // Sent from C# backend to Julia worker
 message JobRequest {

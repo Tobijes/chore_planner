@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const STORAGE_KEY = "choreplanner-users";
+const STORAGE_KEY = "taskplan-users";
 const DEFAULT_USERS = ["Kristine", "Tobias"];
 
 export function useUsers() {

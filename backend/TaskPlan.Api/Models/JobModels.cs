@@ -1,4 +1,4 @@
-namespace ChorePlanner.Api.Models;
+namespace TaskPlan.Api.Models;
 
 public enum JobStatus { Queued, Processing, Done, Failed }
 

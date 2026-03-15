@@ -1,9 +1,9 @@
-using ChorePlanner.Api.Models;
+using TaskPlan.Api.Models;
 using Google.Protobuf;
 using NetMQ;
 using NetMQ.Sockets;
 
-namespace ChorePlanner.Api.Services;
+namespace TaskPlan.Api.Services;
 
 public class ZmqWorkerClient : IDisposable
 {
@@ -21,7 +21,7 @@ public class ZmqWorkerClient : IDisposable
     {
         return Task.Run(() =>
         {
-            var protoRequest = new Choreplanner.JobRequest
+            var protoRequest = new Taskplan.JobRequest
             {
                 NPeriods = request.NPeriods
             };
@@ -30,7 +30,7 @@ public class ZmqWorkerClient : IDisposable
 
             foreach (var task in request.Tasks)
             {
-                protoRequest.Tasks.Add(new Choreplanner.TaskDef
+                protoRequest.Tasks.Add(new Taskplan.TaskDef
                 {
                     Label = task.Label,
                     Frequency = task.Frequency,
@@ -48,13 +48,13 @@ public class ZmqWorkerClient : IDisposable
                 replyBytes = _socket.ReceiveFrameBytes();
             }
 
-            var protoResult = Choreplanner.JobResult.Parser.ParseFrom(replyBytes);
+            var protoResult = Taskplan.JobResult.Parser.ParseFrom(replyBytes);
 
             return MapToDto(protoResult);
         });
     }
 
-    private static JobResultDto MapToDto(Choreplanner.JobResult protoResult)
+    private static JobResultDto MapToDto(Taskplan.JobResult protoResult)
     {
         var dto = new JobResultDto();
 

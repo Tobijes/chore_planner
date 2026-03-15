@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Proto/choreplanner.proto" GrpcServices="None" />
+    <Protobuf Include="Proto/taskplan.proto" GrpcServices="None" />
   </ItemGroup>
 
 </Project>

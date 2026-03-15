@@ -3,9 +3,9 @@ using ZMQ
 
 # ── Pre-generated protobuf types (regenerate via: julia worker/scripts/generate_proto.jl)
 
-include(joinpath(@__DIR__, "proto", "choreplanner", "choreplanner.jl"))
+include(joinpath(@__DIR__, "proto", "taskplan", "taskplan.jl"))
 
-using .choreplanner
+using .taskplan
 
 # ── Include the solver ───────────────────────────────────────────────────────
 
@@ -14,7 +14,7 @@ include(joinpath(@__DIR__, "solver.jl"))
 # ── Conversion helpers ───────────────────────────────────────────────────────
 
 """Convert a protobuf `JobRequest` into solver-native types."""
-function request_to_solver_inputs(req::choreplanner.JobRequest)
+function request_to_solver_inputs(req::taskplan.JobRequest)
     tasks = TaskInput[
         TaskInput(
             td.label,
@@ -31,19 +31,19 @@ end
 
 """Convert solver output into a protobuf `JobResult`."""
 function solver_result_to_response(results::Vector{PeriodResult})
-    periods = choreplanner.PeriodSchedule[]
+    periods = taskplan.PeriodSchedule[]
     for pr in results
-        user_assignments = choreplanner.UserAssignment[]
+        user_assignments = taskplan.UserAssignment[]
         for upr in pr.users
-            task_assignments = choreplanner.TaskAssignment[
-                choreplanner.TaskAssignment(to.label, Int32(to.workload))
+            task_assignments = taskplan.TaskAssignment[
+                taskplan.TaskAssignment(to.label, Int32(to.workload))
                 for to in upr.tasks
             ]
-            push!(user_assignments, choreplanner.UserAssignment(upr.user_name, task_assignments))
+            push!(user_assignments, taskplan.UserAssignment(upr.user_name, task_assignments))
         end
-        push!(periods, choreplanner.PeriodSchedule(Int32(pr.period_number), user_assignments))
+        push!(periods, taskplan.PeriodSchedule(Int32(pr.period_number), user_assignments))
     end
-    return choreplanner.JobResult(periods)
+    return taskplan.JobResult(periods)
 end
 
 # ── Health file ──────────────────────────────────────────────────────────────
@@ -77,13 +77,13 @@ function run_server(; endpoint::String = "tcp://*:" * PORT)
             # Decode protobuf request
             iob = IOBuffer(bytes)
             decoder = ProtoBuf.ProtoDecoder(iob)
-            req = ProtoBuf.decode(decoder, choreplanner.JobRequest)
+            req = ProtoBuf.decode(decoder, taskplan.JobRequest)
 
             println("  Tasks: $(length(req.tasks)), Users: $(length(req.users)), Periods: $(req.n_periods)")
 
             # Convert, solve, convert back
             tasks, users, n_periods = request_to_solver_inputs(req)
-            results = solve_chore_schedule(tasks, users, n_periods)
+            results = solve_task_schedule(tasks, users, n_periods)
             response = solver_result_to_response(results)
 
             # Encode protobuf response

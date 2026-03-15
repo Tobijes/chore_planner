@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Chore Planner (Pligtplan) is a full-stack app that optimally distributes household chores between two users across multiple weeks using mixed-integer programming. Three components communicate in a pipeline:
+Task Plan (Opgaveplan) is a full-stack app that optimally distributes household chores between two users across multiple weeks using mixed-integer programming. Three components communicate in a pipeline:
 
 ```
 Frontend (React/TS, :5173) → HTTP/SSE → Backend (.NET 10, :5000) → ZeroMQ/Protobuf → Worker (Julia, :5555)
@@ -20,10 +20,10 @@ npm --prefix frontend run build      # typecheck + production build
 npm --prefix frontend run lint       # ESLint
 ```
 
-### Backend (`backend/ChorePlanner.Api/`)
+### Backend (`backend/TaskPlan.Api/`)
 ```bash
-dotnet build backend/ChorePlanner.Api  # build
-dotnet run --project backend/ChorePlanner.Api  # run on :5000
+dotnet build backend/TaskPlan.Api  # build
+dotnet run --project backend/TaskPlan.Api  # run on :5000
 ```
 
 Protobuf C# code is auto-generated at build time via Grpc.Tools (configured in the .csproj).
@@ -47,8 +47,8 @@ Start all three processes (worker, backend, frontend) in separate terminals. The
 4. Julia worker deserializes, runs the MIP solver (`JuMP` + `HiGHS`), returns Protobuf response
 5. Backend stores the result, notifies SSE listeners, frontend fetches result via `GET /api/jobs/{id}/result`
 
-### Protobuf Schema (`protobuf/choreplanner.proto`)
-Shared contract between backend and worker. The backend has a copy at `backend/ChorePlanner.Api/Proto/choreplanner.proto`. Julia bindings are generated offline via `worker/scripts/generate_proto.jl` and committed to git. Re-run the script after modifying the proto file.
+### Protobuf Schema (`protobuf/taskplan.proto`)
+Shared contract between backend and worker. The backend has a copy at `backend/TaskPlan.Api/Proto/taskplan.proto`. Julia bindings are generated offline via `worker/scripts/generate_proto.jl` and committed to git. Re-run the script after modifying the proto file.
 
 ### Key Backend Files
 - `Controllers/JobsController.cs` — REST endpoints (submit, SSE events, result, delete)
@@ -58,7 +58,7 @@ Shared contract between backend and worker. The backend has a copy at `backend/C
 
 ### Key Worker Files
 - `worker/src/server.jl` — ZMQ REP server, protobuf encoding/decoding, conversion functions
-- `worker/src/solver.jl` — `solve_chore_schedule()` MIP model: assignment constraints, workload balancing, forced alternation
+- `worker/src/solver.jl` — `solve_task_schedule()` MIP model: assignment constraints, workload balancing, forced alternation
 
 ### Frontend Structure
 - `src/api/jobsApi.ts` — API client (hardcoded to `localhost:5000`)
