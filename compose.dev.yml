@@ -1,0 +1,33 @@
+services:
+  frontend:
+    build:
+      context: frontend              
+      dockerfile: Dockerfile
+    environment:
+        BACKEND_URL: http://backend:80
+    ports:
+        - "3000:80"
+    depends_on: 
+        - backend
+
+  backend:
+    build:
+      context: backend              
+      dockerfile: Dockerfile
+    environment:
+      WORKER_ADDRESS: tcp://worker:80
+      PORT: 80
+    ports:
+        - "8000:80"
+    depends_on: 
+        - worker
+
+  worker:
+    build:
+      context: worker
+      dockerfile: Dockerfile
+    environment:
+      PORT: 80
+    ports:
+        - "5555:80"
+    stop_signal: SIGINT

@@ -46,6 +46,14 @@ function solver_result_to_response(results::Vector{PeriodResult})
     return choreplanner.JobResult(periods)
 end
 
+# ── Health file ──────────────────────────────────────────────────────────────
+
+const HEALTH_FILE = "/tmp/worker-alive"
+
+function touch_health()
+    write(HEALTH_FILE, string(time()))
+end
+
 # ── ZeroMQ REP server ───────────────────────────────────────────────────────
 
 PORT = get(ENV, "PORT", "5555")
@@ -54,6 +62,7 @@ function run_server(; endpoint::String = "tcp://*:" * PORT)
     ctx = ZMQ.Context()
     sock = ZMQ.Socket(ctx, ZMQ.REP)
     ZMQ.bind(sock, endpoint)
+    touch_health()
 
     println("Worker listening on $endpoint")
 
@@ -87,6 +96,7 @@ function run_server(; endpoint::String = "tcp://*:" * PORT)
 
             # Send reply
             ZMQ.send(sock, ZMQ.Message(resp_bytes))
+            touch_health()
         end
     catch e
         if e isa InterruptException
@@ -101,7 +111,7 @@ function run_server(; endpoint::String = "tcp://*:" * PORT)
 end
 
 # ── Main entry point ─────────────────────────────────────────────────────────
-
+println("Starting worker...")
 # Convert SIGINT into an InterruptException instead of crashing at the C level
 Base.exit_on_sigint(false)
 run_server()
